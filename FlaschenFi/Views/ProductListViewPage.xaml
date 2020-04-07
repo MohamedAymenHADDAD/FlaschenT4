@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:selector="clr-namespace:FlaschenFi.Views.Selectors"
+             x:Class="FlaschenFi.Views.ProductListViewPage"
+             Title="{Binding Title}" Padding="16,8">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="detailedView">
+                <Frame CornerRadius="10" HasShadow="True" Padding="8,0" BorderColor="LightGray">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="1" Source="{Binding ImageUrl}" WidthRequest="72" HeightRequest="72" HorizontalOptions="Start" Margin="0,8"/>
+                        <Grid Grid.Column="2" Padding="24,12">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="1" Text="{Binding ShortBrandName}" HorizontalOptions="End" FontSize="14"/>
+                            <Label Grid.Row="2" HorizontalOptions="End" FontSize="24">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="{Binding Price}" FontSize="24" />
+                                            <Span Text=" " />
+                                            <Span Text="€"/>
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Row="3" Text="{Binding ShortDescription}"  HorizontalOptions="End" FontSize="14"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+
+            <DataTemplate x:Key="baseView">
+                <Frame CornerRadius="10" HasShadow="True" Padding="8" BorderColor="LightGray">
+                    <Image Source="{Binding ImageUrl}" WidthRequest="72" HeightRequest="72" HorizontalOptions="Start" />
+                </Frame>
+            </DataTemplate>
+            
+
+            <selector:ProductTemplateSelector x:Key="productTemplateSelector" x:Name="productTemplateSelectorAccessor"
+                                              DetailedProductTemplate="{StaticResource detailedView}"
+                                              BaseProductTemplate="{StaticResource baseView}"/>
+
+            <DataTemplate x:Key="headerProductTemplate">
+                    <Label Text="{Binding LongBrandName}"
+                           FontSize="Large"
+                           FontAttributes="Bold"
+                           Padding="8,0"/>
+            </DataTemplate>
+
+            <selector:HeaderProductTemplateSelector x:Key="headerTemplateSelector" x:Name="headerTemplateSelectorAccessor" 
+                                                    headerTemplate="{StaticResource headerProductTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+        
+    <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
+            <StackLayout Orientation="Horizontal" Spacing="48" VerticalOptions="Center" HorizontalOptions="End" Margin="0,12">
+                <ImageButton x:Name="viewButton" 
+                             Source="grid_24.png"   
+                             HorizontalOptions="Center" 
+                             VerticalOptions="CenterAndExpand" 
+                             Aspect="AspectFit"
+                             BackgroundColor="Transparent"
+                             Clicked="ToggleViewMode"></ImageButton>
+
+                <ImageButton x:Name="sortButton" 
+                             Source="{Binding SortIcon}"   
+                             BackgroundColor="Transparent"
+                             HorizontalOptions="Center" 
+                             VerticalOptions="CenterAndExpand"
+                             Aspect="AspectFit"                             
+                             Clicked="SortProducts"></ImageButton>
+
+            <ImageButton x:Name="filterButton" 
+                        Source="filter_24.png" 
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Center" 
+                        VerticalOptions="CenterAndExpand" 
+                        Aspect="AspectFit"
+                        Clicked="FilterProducts"></ImageButton>
+        </StackLayout>
+        <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadBrandsCommand}">
+            <CollectionView x:Name="ProductsListView"
+                            ItemsSource="{Binding Articles}"                            
+                            ItemTemplate="{StaticResource productTemplateSelector}"/>
+        </RefreshView>
+    </StackLayout>
+    
+</ContentPage>
