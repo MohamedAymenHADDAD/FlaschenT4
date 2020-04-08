@@ -7,7 +7,6 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="detailedView">
-                <Frame CornerRadius="10" HasShadow="True" Padding="8,0" BorderColor="LightGray">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -37,13 +36,10 @@
                             <Label Grid.Row="3" Text="{Binding ShortDescription}"  HorizontalOptions="End" FontSize="14"/>
                         </Grid>
                     </Grid>
-                </Frame>
             </DataTemplate>
 
             <DataTemplate x:Key="baseView">
-                <Frame CornerRadius="10" HasShadow="True" Padding="8" BorderColor="LightGray">
                     <Image Source="{Binding ImageUrl}" WidthRequest="72" HeightRequest="72" HorizontalOptions="Start" />
-                </Frame>
             </DataTemplate>
             
 
@@ -64,22 +60,22 @@
     </ContentPage.Resources>
         
     <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
-            <StackLayout Orientation="Horizontal" Spacing="48" VerticalOptions="Center" HorizontalOptions="End" Margin="0,12">
-                <ImageButton x:Name="viewButton" 
-                             Source="grid_24.png"   
-                             HorizontalOptions="Center" 
-                             VerticalOptions="CenterAndExpand" 
-                             Aspect="AspectFit"
-                             BackgroundColor="Transparent"
-                             Clicked="ToggleViewMode"></ImageButton>
+        <StackLayout Orientation="Horizontal" Spacing="48" VerticalOptions="Center" HorizontalOptions="End" Margin="0,12">
+            <ImageButton x:Name="viewButton" 
+                            Source="grid_24.png"   
+                            HorizontalOptions="Center" 
+                            VerticalOptions="CenterAndExpand" 
+                            Aspect="AspectFit"
+                            BackgroundColor="Transparent"
+                            Clicked="ToggleViewMode"></ImageButton>
 
-                <ImageButton x:Name="sortButton" 
-                             Source="{Binding SortIcon}"   
-                             BackgroundColor="Transparent"
-                             HorizontalOptions="Center" 
-                             VerticalOptions="CenterAndExpand"
-                             Aspect="AspectFit"                             
-                             Clicked="SortProducts"></ImageButton>
+            <ImageButton x:Name="sortButton" 
+                            Source="{Binding SortIcon}"   
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="Center" 
+                            VerticalOptions="CenterAndExpand"
+                            Aspect="AspectFit"                             
+                            Clicked="SortProducts"></ImageButton>
 
             <ImageButton x:Name="filterButton" 
                         Source="filter_24.png" 
